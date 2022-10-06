@@ -1,66 +1,54 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+Lesson ONE:
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+1. We setup a Laravel project using the command "composer create-project laravel/laravel {example-app}" -> if you run this command from your desktop directory it will create a folder with your project in this directory. NB - replace "example-app" with your desired project name
+EG. A project called music-project would be the command -> "composer create-project laravel/laravel music-project"
 
-## About Laravel
+2. Went through the project strcuture.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+web.php - contains your routes - so in here we can define a route called '/home'. When someone navigates to '/home' they will see whatever blade template you define. 
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+migrations folder - contains all the database tables to be created and used by the app. So users, blog-posts or whatever you need for your project. 
+blade templates (found in resources/views ) - These are basically HTML template files where you can display information to your users. 
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+models - These should match your Database migrations. So if you create a 'users' table you should create a matching User model. See the folder Http/Views for these. 
 
-## Learning Laravel
+Controllers - Usually refer to a database model. For example if you have a User Model, the controller is where you will define a show user function that will get a user and pass this information to a blade template. 
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+WORKED EXAMPLE - Define '/show/blog-posts' route, create a migration for the blog-posts table, create a BlogPost Model, create a view called 'index.blade.php' create a BlogPostController (in there retrieve all Blog Posts from DB and pass through to to the 'index' view). When a user accesses the '/show'blog-posts' route they should see all blog posts from DB. 
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+3. Laravel Terminal Commands 
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+php artisan serve - will start your application
+php artisan make:{thing you want to make}
+            make:controller BlogPostController (add " -mr" if you want to make a view and auto fill the functions you will need for BlogPosts)
+            make:model BlogPost
+            make:migration create-blog-posts-table
+php artisan migrate - will create all tables in your database that is connected 
+php artisan migrate:fresh - will drop all tables, clearing all data and create all tables from your migrations table 
 
-## Laravel Sponsors
+FOR ALL AVALIABLE COMMANDS type "php artisan" and it will return a list of all avaliable commands with an explanation of what they do. 
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
 
-### Premium Partners
+NOT COVERED 
+Connecting a Database to your application. 
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+1. Database access is obtained through credentials set in the '.env' file. 
+You will need to install MySQL Workbench - https://dev.mysql.com/downloads/workbench/
+Here is a video on how to setup - https://www.youtube.com/watch?v=UN3de_GEJiI&t=65s
 
-## Contributing
+2. Laravel Docs 
+The docs are a lot clearer than other docs, you shoudl find most of what you need in here. They will become clearer as you get more familiar with Laravel - https://laravel.com/docs/9.x
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+====
 
-## Code of Conduct
+Hopefully all makes sense to you, all of what is described above is in the code base here. If you want to use this as an example project, download these files and fill in the infromation in .env.example and rename to .env. Connect your database, run migrations and php artisan serve. 
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Last notes -
+Laravel is very powerful because it does so much for you, although be warned this is down to the developer using the correct naming conventions. So for exmaple:
 
-## Security Vulnerabilities
+If you want to have a Blog Posts table the name convention should be as follows
+1. BlogPostController (singular)
+2. BlogPost (singular - as the Models name)
+3. create-blog-posts-table (plural - as the migrations name)
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+We can cover this in more detail :)
